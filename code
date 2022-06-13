@@ -1,0 +1,29 @@
+// ------- Preamble -------- //
+#include <avr/io.h> -> both #include are libraries 
+#include <util/delay.h> 
+ 
+void POVDisplay(uint8_t oneByte) { -> function for LEDs
+ PORTB = oneByte; -> PORTB is set as oneByte and is ON
+ _delay_ms(2); -> delay of 2 milliseconds
+}
+int main(void) { -> set up; repeats only once
+ // -------- Inits --------- //
+ DDRB = 0xff; -> DDRB is Dara Direction Register B
+ -> 0xff means that all the pins are set as outputs
+ // ------ Event loop ------ //
+ while (1) { -> repeats until it executes the code
+ POVDisplay(0b00001111); -> every LED is a row of 8 digits that can either 
+10
+ POVDisplay(0b00111111); be 1 or 0; 1 is ON, 0 is OFF
+ POVDisplay(0b11111111); 
+ POVDisplay(0b11111110);
+ POVDisplay(0b00111111);
+ POVDisplay(0b00001111);
+ 
+ PORTB = 0; -> OFF
+ _delay_ms(10); -> 10 millisecond delay 
+ } 
+ return 0; -> loop is OFF 
+}
+
+#written in Programmer's Notepad
